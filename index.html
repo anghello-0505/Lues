@@ -796,6 +796,235 @@
         rgba(255, 255, 255, 0.025);
     }
 
+    .commitment-box {
+      border-color: rgba(153, 199, 162, 0.16);
+      background:
+        linear-gradient(180deg, rgba(153, 199, 162, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.025);
+    }
+
+    .download-status {
+      margin: 0;
+      min-height: 1.3em;
+      font-size: 0.83rem;
+      line-height: 1.5;
+      color: rgba(245, 238, 226, 0.6);
+      text-align: center;
+    }
+
+    .download-status.is-error {
+      color: #efb0a0;
+    }
+
+    .pdf-stage {
+      position: fixed;
+      left: -200vw;
+      top: 0;
+      width: 794px;
+      height: auto;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pdf-sheet {
+      position: relative;
+      width: 794px;
+      min-height: 1123px;
+      padding: 42px 38px;
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 240, 214, 0.08), transparent 26%),
+        radial-gradient(circle at top left, rgba(112, 80, 143, 0.24), transparent 24%),
+        radial-gradient(circle at 90% 8%, rgba(213, 179, 111, 0.18), transparent 22%),
+        linear-gradient(180deg, #0a0910 0%, #12101a 56%, #0a0910 100%);
+      overflow: hidden;
+    }
+
+    .pdf-sheet::before,
+    .pdf-sheet::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .pdf-sheet::before {
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='620' height='620' viewBox='0 0 620 620' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='310' cy='310' r='180' stroke='%23f5eee2' stroke-opacity='0.08'/%3E%3Ccircle cx='310' cy='310' r='235' stroke='%23d5b36f' stroke-opacity='0.08'/%3E%3Cpath d='M310 40V580M40 310H580' stroke='%23f5eee2' stroke-opacity='0.08'/%3E%3Cpath d='M310 118L337 283L502 310L337 337L310 502L283 337L118 310L283 283L310 118Z' stroke='%23d5b36f' stroke-opacity='0.12'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center 78px;
+      background-size: 420px;
+      opacity: 0.34;
+    }
+
+    .pdf-sheet::after {
+      right: -80px;
+      bottom: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213, 179, 111, 0.16), transparent 70%);
+      filter: blur(6px);
+    }
+
+    .pdf-header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .pdf-badge,
+    .pdf-name-badge,
+    .pdf-score-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 240, 214, 0.14);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--accent-3);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pdf-badge {
+      margin-bottom: 16px;
+    }
+
+    .pdf-title {
+      margin: 0 0 12px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 3.15rem;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      max-width: 10ch;
+    }
+
+    .pdf-subtitle {
+      margin: 0;
+      max-width: 40ch;
+      color: rgba(245, 238, 226, 0.72);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .pdf-header-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .pdf-score-chip {
+      color: var(--text);
+      min-width: 92px;
+      justify-content: center;
+    }
+
+    .pdf-section-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pdf-panel,
+    .pdf-highlight,
+    .pdf-quote {
+      position: relative;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 240, 214, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+        rgba(17, 15, 23, 0.82);
+      padding: 22px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .pdf-highlight {
+      background:
+        linear-gradient(180deg, rgba(213, 179, 111, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(17, 15, 23, 0.84);
+    }
+
+    .pdf-panel-label {
+      margin: 0 0 10px;
+      color: var(--accent-3);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pdf-panel-title {
+      margin: 0 0 10px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      line-height: 0.95;
+    }
+
+    .pdf-panel-text,
+    .pdf-panel-copy {
+      margin: 0;
+      color: rgba(245, 238, 226, 0.9);
+      line-height: 1.62;
+      font-size: 0.96rem;
+    }
+
+    .pdf-panel-copy {
+      color: rgba(245, 238, 226, 0.74);
+    }
+
+    .pdf-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pdf-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pdf-quote {
+      margin-top: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+        rgba(17, 15, 23, 0.82);
+    }
+
+    .pdf-quote p {
+      margin: 0;
+      color: rgba(245, 238, 226, 0.88);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .pdf-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: rgba(245, 238, 226, 0.42);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .foot-quote {
       padding: 16px 18px;
       border-left: 2px solid rgba(213, 179, 111, 0.5);
@@ -1013,20 +1242,101 @@
             <p class="discernment-text" id="result-action-message"></p>
           </div>
 
+          <div class="discernment-box commitment-box">
+            <div class="discernment-label">Compromiso de esta semana</div>
+            <p class="discernment-text" id="result-weekly-commitment"></p>
+          </div>
+
           <p class="foot-quote">
             Tu vida siempre va a estar guiada por algo. No se trata de sentirte mal...
             se trata de decidir quién va a guiar tu vida desde hoy.
           </p>
 
           <div class="result-actions">
+            <button class="secondary-button" id="download-pdf-button" type="button">Descargar PDF</button>
             <button class="primary-button" id="restart-button" type="button">Responder de nuevo</button>
             <button class="secondary-button" id="change-name-button" type="button">Cambiar nombre</button>
           </div>
+          <p class="download-status" id="download-status" aria-live="polite"></p>
         </article>
       </section>
     </div>
   </main>
 
+  <div class="pdf-stage" aria-hidden="true">
+    <section class="pdf-sheet" id="pdf-sheet">
+      <header class="pdf-header">
+        <div>
+          <div class="pdf-badge">Reflexión personal</div>
+          <h1 class="pdf-title">Lo que realmente guía mi vida</h1>
+          <p class="pdf-subtitle">
+            Un momento de verdad para mirar qué está ocupando el centro y volver a decidir desde dónde querés vivir.
+          </p>
+        </div>
+
+        <div class="pdf-header-side">
+          <div class="pdf-name-badge" id="pdf-name-badge">Nombre</div>
+          <div class="pdf-score-chip" id="pdf-score-chip">0 / 20</div>
+          <div class="pdf-score-chip" id="pdf-date-chip">Hoy</div>
+        </div>
+      </header>
+
+      <div class="pdf-section-grid">
+        <article class="pdf-highlight">
+          <p class="pdf-panel-label">Resultado</p>
+          <h2 class="pdf-panel-title" id="pdf-result-title">Título</h2>
+          <p class="pdf-panel-text" id="pdf-impact-line"></p>
+        </article>
+
+        <article class="pdf-panel">
+          <p class="pdf-panel-label">Tu respuesta honesta</p>
+          <p class="pdf-panel-text" id="pdf-reflection-choice"></p>
+        </article>
+      </div>
+
+      <div class="pdf-section-grid">
+        <article class="pdf-panel">
+          <p class="pdf-panel-label">Lo que hoy parece pesar más</p>
+          <p class="pdf-panel-copy" id="pdf-discernment-text"></p>
+        </article>
+
+        <div class="pdf-stack">
+          <article class="pdf-panel">
+            <p class="pdf-panel-label">Lo que te toca hacer hoy</p>
+            <p class="pdf-panel-copy" id="pdf-action-text"></p>
+          </article>
+          <article class="pdf-panel">
+            <p class="pdf-panel-label">Compromiso de esta semana</p>
+            <p class="pdf-panel-copy" id="pdf-commitment-text"></p>
+          </article>
+        </div>
+      </div>
+
+      <div class="pdf-bottom-grid">
+        <article class="pdf-panel">
+          <p class="pdf-panel-label">Lo que Dios quiere decirte</p>
+          <p class="pdf-panel-text" id="pdf-personal-message"></p>
+        </article>
+
+        <article class="pdf-panel">
+          <p class="pdf-panel-label">Para no olvidar</p>
+          <p class="pdf-panel-text">
+            Tu vida siempre va a estar guiada por algo. No se trata de sentirte mal...
+            se trata de decidir quién va a guiar tu vida desde hoy.
+          </p>
+        </article>
+      </div>
+
+      <div class="pdf-quote">
+        <p id="pdf-summary-line"></p>
+      </div>
+
+      <div class="pdf-footer">Grupo juvenil • discernimiento • vida real</div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const questions = [
       "Has dejado de hacer algo que querías por miedo a lo que iban a decir de vos.",
@@ -1160,11 +1470,45 @@
       veryHigh: "No se trata de quedarte en la culpa; se trata de decidir quién va a guiar tu vida desde hoy."
     };
 
+    const weeklyCommitments = {
+      aprobacion: {
+        low: "Esta semana hacé una decisión correcta aunque nadie la vea ni la aplauda.",
+        mid: "Esta semana evitá una acción hecha solo para encajar y elegí una más verdadera.",
+        high: "Antes de subir, decir o hacer algo por imagen, frená y preguntate: «¿Esto nace de verdad o de presión?»",
+        veryHigh: "Durante esta semana, renunciá al menos una vez a buscar aprobación y elegí obedecer a Dios en silencio."
+      },
+      autosuficiencia: {
+        low: "Orá cada noche dos minutos y entregale a Dios una decisión concreta del día siguiente.",
+        mid: "No tomés una decisión importante esta semana sin antes hacer una oración honesta y breve.",
+        high: "Elegí una decisión que venís controlando solo y ponela en oración antes de moverla.",
+        veryHigh: "Buscá esta semana a una persona de fe y compartile aquello que llevás solo para dejar de decidir aislado."
+      },
+      fe_fragmentada: {
+        low: "Abrí esta semana un pequeño espacio fijo para Dios y cumplilo aunque sea corto.",
+        mid: "Elegí un área real de tu vida que venís separando de Dios y mencionásela claramente en oración.",
+        high: "Hacé esta semana una oración sin maquillaje sobre aquello que todavía no querés entregarle a Dios.",
+        veryHigh: "Tomá diez minutos esta semana para decirle a Dios, por su nombre, qué parte de tu vida le cerraste y por qué."
+      },
+      comodidad: {
+        low: "Elegí una pequeña renuncia esta semana para recordarte que no todo tiene que ser fácil.",
+        mid: "Hacé primero esta semana eso correcto que venís pateando por comodidad.",
+        high: "Cuando aparezca lo fácil, elegí una sola vez lo correcto aunque te cueste más.",
+        veryHigh: "Renunciá esta semana a una costumbre cómoda que te enfría y reemplazala por un acto concreto de fidelidad."
+      },
+      mixed: {
+        low: "Haz cinco minutos de silencio esta semana y preguntale a Dios qué voz está pesando más en ti.",
+        mid: "Escribí esta semana qué cosas te están guiando y marcá cuál te aleja más de Dios.",
+        high: "Detené una vez tus impulsos esta semana y elegí desde la oración en lugar de reaccionar en automático.",
+        veryHigh: "Buscá esta semana un momento de silencio, nombrá tus luchas y entregá una de ellas sin justificarla."
+      }
+    };
+
     const state = {
       currentIndex: 0,
       answers: [],
       userName: "",
-      finalReflection: ""
+      finalReflection: "",
+      latestResult: null
     };
 
     const startScreen = document.getElementById("start-screen");
@@ -1189,6 +1533,38 @@
     const resultDiscernment = document.getElementById("result-discernment");
     const resultPersonalMessage = document.getElementById("result-personal-message");
     const resultActionMessage = document.getElementById("result-action-message");
+    const resultWeeklyCommitment = document.getElementById("result-weekly-commitment");
+    const downloadPdfButton = document.getElementById("download-pdf-button");
+    const downloadStatus = document.getElementById("download-status");
+    const pdfNameBadge = document.getElementById("pdf-name-badge");
+    const pdfScoreChip = document.getElementById("pdf-score-chip");
+    const pdfDateChip = document.getElementById("pdf-date-chip");
+    const pdfResultTitle = document.getElementById("pdf-result-title");
+    const pdfImpactLine = document.getElementById("pdf-impact-line");
+    const pdfReflectionChoice = document.getElementById("pdf-reflection-choice");
+    const pdfDiscernmentText = document.getElementById("pdf-discernment-text");
+    const pdfActionText = document.getElementById("pdf-action-text");
+    const pdfCommitmentText = document.getElementById("pdf-commitment-text");
+    const pdfPersonalMessage = document.getElementById("pdf-personal-message");
+    const pdfSummaryLine = document.getElementById("pdf-summary-line");
+    const pdfSheet = document.getElementById("pdf-sheet");
+
+    function formatToday() {
+      return new Intl.DateTimeFormat("es-HN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(new Date());
+    }
+
+    function sanitizeFileName(value) {
+      return value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .toLowerCase();
+    }
 
     function normalizeName(name) {
       return name
@@ -1339,6 +1715,73 @@
       return `${actionIntros[intensity]} ${actionSteps[themeKey]} ${actionClosings[intensity]}`;
     }
 
+    function buildWeeklyCommitment(score, themeKey) {
+      const intensity = getIntensityKey(score);
+      return weeklyCommitments[themeKey][intensity];
+    }
+
+    function buildReflectionLine() {
+      const reflection = reflectionChoices[state.finalReflection] || reflectionChoices.unclear;
+      return `Cuando te frenaste a mirarte con honestidad, dijiste que hoy te está guiando ${reflection.phrase}.`;
+    }
+
+    function updatePdfTemplate(resultData) {
+      pdfNameBadge.textContent = resultData.name;
+      pdfScoreChip.textContent = `${resultData.score} / 20`;
+      pdfDateChip.textContent = formatToday();
+      pdfResultTitle.textContent = resultData.title;
+      pdfImpactLine.textContent = resultData.impactLine;
+      pdfReflectionChoice.textContent = resultData.reflectionLabel;
+      pdfDiscernmentText.textContent = resultData.discernment;
+      pdfActionText.textContent = resultData.actionMessage;
+      pdfCommitmentText.textContent = resultData.weeklyCommitment;
+      pdfPersonalMessage.textContent = resultData.personalMessage;
+      pdfSummaryLine.textContent = `${buildReflectionLine()} ${resultData.weeklyCommitment}`;
+    }
+
+    async function downloadPdf() {
+      if (!state.latestResult) {
+        downloadStatus.textContent = "Primero generá un resultado antes de descargar el PDF.";
+        downloadStatus.classList.add("is-error");
+        return;
+      }
+
+      if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
+        downloadStatus.textContent = "No pude cargar el módulo de PDF. Abrí la página con internet para poder descargarlo.";
+        downloadStatus.classList.add("is-error");
+        return;
+      }
+
+      downloadStatus.textContent = "Preparando tu PDF...";
+      downloadStatus.classList.remove("is-error");
+      downloadPdfButton.disabled = true;
+
+      try {
+        updatePdfTemplate(state.latestResult);
+
+        const canvas = await window.html2canvas(pdfSheet, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#09080d"
+        });
+
+        const imageData = canvas.toDataURL("image/png");
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+        pdf.addImage(imageData, "PNG", 0, 0, 210, 297);
+
+        const safeName = sanitizeFileName(state.latestResult.name || "resultado");
+        pdf.save(`discernimiento-${safeName}.pdf`);
+        downloadStatus.textContent = "PDF listo. Ya debería haberse descargado.";
+      } catch (error) {
+        console.error(error);
+        downloadStatus.textContent = "No pude generar el PDF en este momento.";
+        downloadStatus.classList.add("is-error");
+      } finally {
+        downloadPdfButton.disabled = false;
+      }
+    }
+
     function validateName() {
       const rawName = nameInput.value;
       const normalizedName = normalizeName(rawName);
@@ -1372,16 +1815,36 @@
       const totalScore = getScore();
       const result = getResultByScore(totalScore);
       const dominantTheme = getDominantThemeData();
+      const impactLine = buildImpactLine(totalScore, dominantTheme.key);
+      const personalMessage = buildPersonalMessage(totalScore, dominantTheme.key);
+      const actionMessage = buildActionMessage(totalScore, dominantTheme.key);
+      const weeklyCommitment = buildWeeklyCommitment(totalScore, dominantTheme.key);
+      const reflection = reflectionChoices[state.finalReflection] || reflectionChoices.unclear;
 
       resultTitle.textContent = result.title;
       resultScore.textContent = `${totalScore}/20`;
-      resultImpactLine.textContent = buildImpactLine(totalScore, dominantTheme.key);
+      resultImpactLine.textContent = impactLine;
       resultMessage.textContent = result.message;
       resultDiscernment.textContent = dominantTheme.text;
-      resultPersonalMessage.textContent = buildPersonalMessage(totalScore, dominantTheme.key);
-      resultActionMessage.textContent = buildActionMessage(totalScore, dominantTheme.key);
+      resultPersonalMessage.textContent = personalMessage;
+      resultActionMessage.textContent = actionMessage;
+      resultWeeklyCommitment.textContent = weeklyCommitment;
       progressFill.style.width = "100%";
       scoreChip.textContent = `${totalScore} / 20`;
+      downloadStatus.textContent = "";
+      downloadStatus.classList.remove("is-error");
+      state.latestResult = {
+        name: getDisplayName(),
+        score: totalScore,
+        title: result.title,
+        impactLine,
+        message: result.message,
+        discernment: dominantTheme.text,
+        personalMessage,
+        actionMessage,
+        weeklyCommitment,
+        reflectionLabel: reflection.label
+      };
       switchScreen(resultScreen);
     }
 
@@ -1413,11 +1876,14 @@
       state.currentIndex = 0;
       state.answers = [];
       state.finalReflection = "";
+      state.latestResult = null;
       reflectionButtons.forEach((button) => {
         button.classList.remove("is-selected");
       });
       reflectionError.textContent = "";
       revealResultButton.disabled = true;
+      downloadStatus.textContent = "";
+      downloadStatus.classList.remove("is-error");
       switchScreen(quizScreen);
       renderQuestion();
     }
@@ -1431,6 +1897,9 @@
     }
 
     function changeName() {
+      state.latestResult = null;
+      downloadStatus.textContent = "";
+      downloadStatus.classList.remove("is-error");
       switchScreen(startScreen);
       window.setTimeout(() => {
         nameInput.focus();
@@ -1441,6 +1910,7 @@
     document.getElementById("start-button").addEventListener("click", startQuiz);
     document.getElementById("restart-button").addEventListener("click", beginQuiz);
     document.getElementById("change-name-button").addEventListener("click", changeName);
+    downloadPdfButton.addEventListener("click", downloadPdf);
     revealResultButton.addEventListener("click", () => {
       if (!state.finalReflection) {
         reflectionError.textContent = "Elegí una respuesta antes de ver el resultado.";
