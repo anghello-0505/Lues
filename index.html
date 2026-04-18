@@ -136,6 +136,8 @@
       display: none;
       padding: 58px 22px 24px;
       position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .screen.active {
@@ -381,6 +383,14 @@
       transform: scale(0.985);
     }
 
+    .primary-button:disabled,
+    .secondary-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      box-shadow: none;
+      transform: none;
+    }
+
     .progress-shell {
       display: flex;
       flex-direction: column;
@@ -512,11 +522,23 @@
       max-width: 34ch;
     }
 
+    .reflection-screen .question-text {
+      max-width: 14ch;
+      font-size: clamp(1.95rem, 7.8vw, 2.55rem);
+    }
+
     .answer-group {
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin-top: auto;
+    }
+
+    .reflection-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     .answer-button {
@@ -554,6 +576,61 @@
       color: var(--text-soft);
       font-size: 0.88rem;
       line-height: 1.45;
+    }
+
+    .reflection-button {
+      width: 100%;
+      min-height: 68px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+        rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      text-align: left;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+
+    .reflection-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 232, 186, 0.24);
+    }
+
+    .reflection-button.is-selected {
+      border-color: rgba(213, 179, 111, 0.44);
+      background:
+        linear-gradient(180deg, rgba(213, 179, 111, 0.12), rgba(112, 80, 143, 0.08)),
+        rgba(255, 255, 255, 0.035);
+      box-shadow:
+        0 16px 28px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .reflection-button strong,
+    .reflection-button span {
+      display: block;
+    }
+
+    .reflection-button strong {
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .reflection-button span {
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .reflection-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
     }
 
     .answer-button[data-points="2"]::after,
@@ -656,6 +733,14 @@
       text-wrap: balance;
     }
 
+    .result-impact {
+      margin: -4px 0 0;
+      color: var(--accent-3);
+      font-size: 1.02rem;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
     .result-copy {
       font-size: 0.98rem;
     }
@@ -702,6 +787,13 @@
       color: var(--text);
       line-height: 1.7;
       font-size: 0.98rem;
+    }
+
+    .action-box {
+      border-color: rgba(216, 143, 122, 0.16);
+      background:
+        linear-gradient(180deg, rgba(216, 143, 122, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.025);
     }
 
     .foot-quote {
@@ -848,13 +940,54 @@
         </article>
       </section>
 
+      <section class="screen reflection-screen" id="reflection-screen" aria-live="polite">
+        <div class="ambient-glow"></div>
+        <div class="ambient-glow right"></div>
+
+        <article class="question-card is-entering" id="reflection-card">
+          <div class="question-kicker">Antes del cierre</div>
+          <h2 class="question-text">Si hoy tuvieras que ser honesto... ¿quién está guiando tu vida?</h2>
+          <p class="question-helper">
+            No respondás rápido. Tocá lo que más se parezca a la verdad de hoy, aunque incomode.
+          </p>
+
+          <div class="reflection-options">
+            <button class="reflection-button" type="button" data-reflection="dios">
+              <strong>Dios</strong>
+              <span>Quiero creer que Él sí está llevando el centro de mis decisiones.</span>
+            </button>
+            <button class="reflection-button" type="button" data-reflection="approval">
+              <strong>La opinión de los demás</strong>
+              <span>Muchas veces pesa demasiado lo que van a pensar de mí.</span>
+            </button>
+            <button class="reflection-button" type="button" data-reflection="self">
+              <strong>Yo mismo</strong>
+              <span>Termino haciendo lo que quiero, lo que siento o lo que me conviene.</span>
+            </button>
+            <button class="reflection-button" type="button" data-reflection="comfort">
+              <strong>La comodidad o lo fácil</strong>
+              <span>Evito lo que cuesta, aunque sepa que no siempre es lo correcto.</span>
+            </button>
+            <button class="reflection-button" type="button" data-reflection="unclear">
+              <strong>No lo tengo claro</strong>
+              <span>Siento que hay muchas voces mezcladas y no sé cuál manda de verdad.</span>
+            </button>
+          </div>
+
+          <div class="reflection-actions">
+            <p class="field-error" id="reflection-error" aria-live="polite"></p>
+            <button class="primary-button" id="reveal-result-button" type="button" disabled>Ver mi resultado</button>
+          </div>
+        </article>
+      </section>
+
       <section class="screen result-screen" id="result-screen" aria-live="polite">
         <div class="ambient-glow right"></div>
 
         <article class="result-card">
           <div class="result-top">
             <div>
-          <div class="result-badge">Resultado final</div>
+              <div class="result-badge">Resultado final</div>
               <h2 class="result-title" id="result-title"></h2>
             </div>
             <div class="score-ring" aria-label="Puntaje total">
@@ -862,6 +995,7 @@
             </div>
           </div>
 
+          <p class="result-impact" id="result-impact-line"></p>
           <p class="result-copy" id="result-message"></p>
 
           <div class="discernment-box">
@@ -874,9 +1008,14 @@
             <p id="result-personal-message"></p>
           </div>
 
+          <div class="discernment-box action-box">
+            <div class="discernment-label">Lo que te toca hacer hoy</div>
+            <p class="discernment-text" id="result-action-message"></p>
+          </div>
+
           <p class="foot-quote">
-            Tu vida siempre va a estar guiada por algo. La pregunta es si ese algo te acerca a Dios
-            o te aleja de quien estás llamado a ser.
+            Tu vida siempre va a estar guiada por algo. No se trata de sentirte mal...
+            se trata de decidir quién va a guiar tu vida desde hoy.
           </p>
 
           <div class="result-actions">
@@ -976,14 +1115,61 @@
       veryHigh: "Volvé. No cuando te sientas perfecto, no cuando todo esté acomodado: volvé ahora. Yo sigo llamándote por tu nombre incluso en medio de tu desorden."
     };
 
+    const reflectionChoices = {
+      dios: {
+        label: "Dios",
+        phrase: "Dios"
+      },
+      approval: {
+        label: "La opinión de los demás",
+        phrase: "la opinión de los demás"
+      },
+      self: {
+        label: "yo mismo",
+        phrase: "tu propia voluntad"
+      },
+      comfort: {
+        label: "la comodidad o lo fácil",
+        phrase: "la comodidad"
+      },
+      unclear: {
+        label: "no lo tengo claro",
+        phrase: "demasiadas voces a la vez"
+      }
+    };
+
+    const actionIntros = {
+      low: "No te conformés con un buen resultado.",
+      mid: "Esto no se arregla solo con darte cuenta.",
+      high: "Lo que viste hoy exige una decisión seria.",
+      veryHigh: "No lo pateés para después."
+    };
+
+    const actionSteps = {
+      aprobacion: "Esta semana hacé una elección concreta sin obedecer al qué dirán y presentásela a Dios con sinceridad.",
+      autosuficiencia: "La próxima decisión importante no la tomés solo: frená, orala de verdad y hablala con alguien que te ayude a escuchar a Dios.",
+      fe_fragmentada: "Elegí el área de tu vida donde más le cerraste la puerta a Dios y abrísela con una oración honesta, sin maquillaje.",
+      comodidad: "Renunciá hoy a una comodidad que sabés que te enfría y elegí lo correcto aunque te cueste.",
+      mixed: "Hacé silencio, nombrá qué voces te están partiendo por dentro y elegí una sola obediencia concreta hacia Dios."
+    };
+
+    const actionClosings = {
+      low: "No se trata de sentirte bien con este resultado; se trata de decidir quién va a guiar tu vida desde hoy.",
+      mid: "No se trata de sentirte mal; se trata de decidir quién va a guiar tu vida desde hoy.",
+      high: "No se trata solo de incomodarte; se trata de decidir quién va a guiar tu vida desde hoy.",
+      veryHigh: "No se trata de quedarte en la culpa; se trata de decidir quién va a guiar tu vida desde hoy."
+    };
+
     const state = {
       currentIndex: 0,
       answers: [],
-      userName: ""
+      userName: "",
+      finalReflection: ""
     };
 
     const startScreen = document.getElementById("start-screen");
     const quizScreen = document.getElementById("quiz-screen");
+    const reflectionScreen = document.getElementById("reflection-screen");
     const resultScreen = document.getElementById("result-screen");
     const nameInput = document.getElementById("name-input");
     const nameError = document.getElementById("name-error");
@@ -993,11 +1179,16 @@
     const questionCard = document.getElementById("question-card");
     const questionText = document.getElementById("question-text");
     const answerButtons = Array.from(document.querySelectorAll(".answer-button"));
+    const reflectionButtons = Array.from(document.querySelectorAll(".reflection-button"));
+    const reflectionError = document.getElementById("reflection-error");
+    const revealResultButton = document.getElementById("reveal-result-button");
     const resultTitle = document.getElementById("result-title");
     const resultScore = document.getElementById("result-score");
+    const resultImpactLine = document.getElementById("result-impact-line");
     const resultMessage = document.getElementById("result-message");
     const resultDiscernment = document.getElementById("result-discernment");
     const resultPersonalMessage = document.getElementById("result-personal-message");
+    const resultActionMessage = document.getElementById("result-action-message");
 
     function normalizeName(name) {
       return name
@@ -1013,7 +1204,7 @@
     }
 
     function switchScreen(targetScreen) {
-      [startScreen, quizScreen, resultScreen].forEach((screen) => {
+      [startScreen, quizScreen, reflectionScreen, resultScreen].forEach((screen) => {
         screen.classList.toggle("active", screen === targetScreen);
       });
     }
@@ -1104,6 +1295,50 @@
       return `${name}, ${personalOpenings[intensity]} ${personalThemes[themeKey]} ${personalClosings[intensity]}`;
     }
 
+    function buildImpactLine(score, themeKey) {
+      const name = getDisplayName();
+      const reflection = reflectionChoices[state.finalReflection] || reflectionChoices.unclear;
+
+      if (state.finalReflection === "dios") {
+        if (score <= 4) {
+          return `${name}, se nota que querés que Dios esté en el centro. Ahora elegilo también en lo concreto.`;
+        }
+
+        if (score <= 9) {
+          return `${name}, decís que querés que Dios guíe tu vida, pero hay otras voces peleando demasiado fuerte por ese lugar.`;
+        }
+
+        if (score <= 14) {
+          return `${name}, no es que Dios no esté... es que muchas decisiones tuyas ya no están naciendo desde Él.`;
+        }
+
+        return `${name}, no es que Dios no esté... es que hoy no está en el centro.`;
+      }
+
+      if (state.finalReflection === "unclear") {
+        return `${name}, si ni siquiera tenés claro quién está guiando tu vida, eso ya es una alarma. Un corazón sin centro termina siendo arrastrado por cualquier voz.`;
+      }
+
+      if (themeKey === "aprobacion" && state.finalReflection === "approval") {
+        return `${name}, en el fondo ya lo sabés: la opinión de los demás está ocupando un lugar que le corresponde a Dios.`;
+      }
+
+      if (themeKey === "comodidad" && state.finalReflection === "comfort") {
+        return `${name}, no es que no sepas lo correcto... es que lo cómodo te está ganando demasiado espacio.`;
+      }
+
+      if (themeKey === "autosuficiencia" && state.finalReflection === "self") {
+        return `${name}, el problema no es solo lo que hacés; es que te estás guiando demasiado por vos mismo.`;
+      }
+
+      return `${name}, cuando te frenaste a responder con honestidad, dijiste que hoy te está guiando ${reflection.phrase}. Escuchá lo que esa verdad está dejando al descubierto.`;
+    }
+
+    function buildActionMessage(score, themeKey) {
+      const intensity = getIntensityKey(score);
+      return `${actionIntros[intensity]} ${actionSteps[themeKey]} ${actionClosings[intensity]}`;
+    }
+
     function validateName() {
       const rawName = nameInput.value;
       const normalizedName = normalizeName(rawName);
@@ -1120,6 +1355,19 @@
       return true;
     }
 
+    function selectReflection(choiceKey) {
+      state.finalReflection = choiceKey;
+      reflectionButtons.forEach((button) => {
+        button.classList.toggle("is-selected", button.dataset.reflection === choiceKey);
+      });
+      reflectionError.textContent = "";
+      revealResultButton.disabled = false;
+    }
+
+    function showReflectionPrompt() {
+      switchScreen(reflectionScreen);
+    }
+
     function showResult() {
       const totalScore = getScore();
       const result = getResultByScore(totalScore);
@@ -1127,9 +1375,11 @@
 
       resultTitle.textContent = result.title;
       resultScore.textContent = `${totalScore}/20`;
+      resultImpactLine.textContent = buildImpactLine(totalScore, dominantTheme.key);
       resultMessage.textContent = result.message;
       resultDiscernment.textContent = dominantTheme.text;
       resultPersonalMessage.textContent = buildPersonalMessage(totalScore, dominantTheme.key);
+      resultActionMessage.textContent = buildActionMessage(totalScore, dominantTheme.key);
       progressFill.style.width = "100%";
       scoreChip.textContent = `${totalScore} / 20`;
       switchScreen(resultScreen);
@@ -1148,7 +1398,7 @@
         state.currentIndex += 1;
 
         if (state.currentIndex >= questions.length) {
-          showResult();
+          showReflectionPrompt();
         } else {
           renderQuestion();
         }
@@ -1162,6 +1412,12 @@
     function beginQuiz() {
       state.currentIndex = 0;
       state.answers = [];
+      state.finalReflection = "";
+      reflectionButtons.forEach((button) => {
+        button.classList.remove("is-selected");
+      });
+      reflectionError.textContent = "";
+      revealResultButton.disabled = true;
       switchScreen(quizScreen);
       renderQuestion();
     }
@@ -1185,6 +1441,14 @@
     document.getElementById("start-button").addEventListener("click", startQuiz);
     document.getElementById("restart-button").addEventListener("click", beginQuiz);
     document.getElementById("change-name-button").addEventListener("click", changeName);
+    revealResultButton.addEventListener("click", () => {
+      if (!state.finalReflection) {
+        reflectionError.textContent = "Elegí una respuesta antes de ver el resultado.";
+        return;
+      }
+
+      showResult();
+    });
 
     nameInput.addEventListener("input", () => {
       if (nameError.textContent) {
@@ -1202,6 +1466,12 @@
     answerButtons.forEach((button) => {
       button.addEventListener("click", () => {
         handleAnswer(Number(button.dataset.points));
+      });
+    });
+
+    reflectionButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        selectReflection(button.dataset.reflection);
       });
     });
   </script>
