@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Lo que realmente guía mi vida</title>
+  <meta
+    name="description"
+    content="Web app de reflexión espiritual para jóvenes: 10 situaciones reales para descubrir qué está guiando tu vida."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg: #09080d;
+      --bg-2: #14111d;
+      --panel: rgba(19, 17, 27, 0.82);
+      --panel-strong: rgba(14, 12, 20, 0.94);
+      --line: rgba(255, 240, 214, 0.12);
+      --line-strong: rgba(255, 232, 186, 0.24);
+      --text: #f5eee2;
+      --text-soft: rgba(245, 238, 226, 0.72);
+      --accent: #d5b36f;
+      --accent-2: #70508f;
+      --accent-3: #f2ddac;
+      --danger-soft: #d88f7a;
+      --success-soft: #99c7a2;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --transition: 320ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(112, 80, 143, 0.2), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(213, 179, 111, 0.16), transparent 18%),
+        radial-gradient(circle at 50% 120%, rgba(213, 179, 111, 0.1), transparent 32%),
+        linear-gradient(180deg, #0a0910 0%, #12101a 50%, #0a0910 100%);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 240, 214, 0.05), transparent 23%),
+        radial-gradient(circle at 50% 18%, rgba(255, 225, 174, 0.04), transparent 40%);
+      filter: blur(18px);
+    }
+
+    body::after {
+      opacity: 0.22;
+      background-image: url("data:image/svg+xml,%3Csvg width='620' height='620' viewBox='0 0 620 620' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='310' cy='310' r='180' stroke='%23f5eee2' stroke-opacity='0.08'/%3E%3Ccircle cx='310' cy='310' r='235' stroke='%23d5b36f' stroke-opacity='0.08'/%3E%3Cpath d='M310 40V580M40 310H580' stroke='%23f5eee2' stroke-opacity='0.08'/%3E%3Cpath d='M310 118L337 283L502 310L337 337L310 502L283 337L118 310L283 283L310 118Z' stroke='%23d5b36f' stroke-opacity='0.12'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center 18%;
+      background-size: min(94vw, 620px);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 460px);
+      margin: 0 auto;
+      padding: max(18px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .phone-frame {
+      width: 100%;
+      min-height: calc(100vh - 36px);
+      border: 1px solid rgba(255, 240, 214, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04)),
+        var(--panel-strong);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-frame::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36%;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      z-index: 2;
+    }
+
+    .screen {
+      flex: 1;
+      display: none;
+      padding: 58px 22px 24px;
+      position: relative;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      animation: screenFade 420ms ease;
+    }
+
+    @keyframes screenFade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ambient-glow {
+      position: absolute;
+      inset: auto auto 10% -10%;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(112, 80, 143, 0.34), transparent 68%);
+      filter: blur(12px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .ambient-glow.right {
+      inset: 2% -8% auto auto;
+      background: radial-gradient(circle, rgba(213, 179, 111, 0.28), transparent 66%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.025);
+      color: var(--text-soft);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(213, 179, 111, 0.72);
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      position: relative;
+    }
+
+    .cross-mark {
+      width: 72px;
+      height: 72px;
+      position: relative;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 240, 214, 0.12);
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 227, 173, 0.18), transparent 55%),
+        rgba(255, 255, 255, 0.02);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .cross-mark span {
+      position: absolute;
+      background: linear-gradient(180deg, rgba(245, 238, 226, 0.9), rgba(213, 179, 111, 0.62));
+      box-shadow: 0 0 24px rgba(213, 179, 111, 0.22);
+      border-radius: 999px;
+    }
+
+    .cross-mark span:first-child {
+      width: 10px;
+      height: 42px;
+      left: 31px;
+      top: 15px;
+    }
+
+    .cross-mark span:last-child {
+      width: 34px;
+      height: 10px;
+      left: 19px;
+      top: 26px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      line-height: 0.97;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 10vw, 4rem);
+      font-weight: 700;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .hero p,
+    .body-copy,
+    .question-helper,
+    .result-copy,
+    .foot-quote {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.65;
+      font-size: 0.98rem;
+    }
+
+    .hero p {
+      max-width: 34ch;
+      font-size: 1rem;
+    }
+
+    .start-actions {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .name-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .name-label {
+      color: var(--text-soft);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 58px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+        rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .name-input::placeholder {
+      color: rgba(245, 238, 226, 0.36);
+    }
+
+    .name-input:focus {
+      border-color: rgba(213, 179, 111, 0.45);
+      box-shadow:
+        0 0 0 4px rgba(213, 179, 111, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .name-note,
+    .field-error {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .name-note {
+      color: rgba(245, 238, 226, 0.52);
+    }
+
+    .field-error {
+      color: #efb0a0;
+      min-height: 1.3em;
+    }
+
+    .ghost-note {
+      color: rgba(245, 238, 226, 0.5);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .answer-button {
+      border: 0;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 58px;
+      border-radius: 18px;
+      padding: 16px 18px;
+      width: 100%;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .primary-button {
+      color: #1a140b;
+      background: linear-gradient(135deg, #f2ddac 0%, #d5b36f 48%, #b98e49 100%);
+      box-shadow:
+        0 16px 32px rgba(133, 98, 37, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .secondary-button {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .primary-button:active,
+    .secondary-button:active,
+    .answer-button:active {
+      transform: scale(0.985);
+    }
+
+    .progress-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .question-step,
+    .score-chip {
+      color: var(--text-soft);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .score-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      min-width: 72px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(90deg, rgba(112, 80, 143, 0.82), rgba(213, 179, 111, 0.95));
+      box-shadow: 0 0 24px rgba(213, 179, 111, 0.3);
+      transition: width 420ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .question-card,
+    .result-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+        rgba(18, 15, 26, 0.78);
+      padding: 22px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .question-card::before,
+    .result-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.05), transparent 28%),
+        radial-gradient(circle at top right, rgba(213, 179, 111, 0.11), transparent 28%);
+      pointer-events: none;
+    }
+
+    .question-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 330px;
+    }
+
+    .question-card.is-leaving {
+      animation: fadeOutCard 220ms ease forwards;
+    }
+
+    .question-card.is-entering {
+      animation: fadeInCard 300ms ease;
+    }
+
+    @keyframes fadeOutCard {
+      to {
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+      }
+    }
+
+    @keyframes fadeInCard {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-kicker {
+      color: var(--accent-3);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      font-size: clamp(2rem, 8vw, 2.65rem);
+      font-weight: 600;
+      line-height: 1;
+      text-wrap: balance;
+      max-width: 12ch;
+    }
+
+    .question-helper {
+      font-size: 0.95rem;
+      max-width: 34ch;
+    }
+
+    .answer-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .answer-button {
+      position: relative;
+      width: 100%;
+      min-height: 76px;
+      border-radius: 20px;
+      padding: 16px 18px;
+      text-align: left;
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+        rgba(255, 255, 255, 0.02);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .answer-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 232, 186, 0.24);
+      box-shadow:
+        0 14px 24px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .answer-button strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .answer-button span {
+      display: block;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .answer-button[data-points="2"]::after,
+    .answer-button[data-points="1"]::after,
+    .answer-button[data-points="0"]::after {
+      content: attr(data-label);
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 6px 8px;
+      border-radius: 999px;
+    }
+
+    .answer-button[data-points="2"]::after {
+      background: rgba(216, 143, 122, 0.12);
+      color: #f2b5a1;
+    }
+
+    .answer-button[data-points="1"]::after {
+      background: rgba(213, 179, 111, 0.12);
+      color: #f2ddac;
+    }
+
+    .answer-button[data-points="0"]::after {
+      background: rgba(153, 199, 162, 0.12);
+      color: #b8e1c0;
+    }
+
+    .result-screen {
+      justify-content: center;
+    }
+
+    .result-card {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    .result-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(213, 179, 111, 0.08);
+      color: var(--accent-3);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .score-ring {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(16, 13, 22, 0.9) 48%, transparent 49%),
+        conic-gradient(from 180deg, rgba(112, 80, 143, 0.9), rgba(213, 179, 111, 0.96), rgba(112, 80, 143, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.22);
+      flex-shrink: 0;
+    }
+
+    .score-ring span {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: rgba(12, 10, 17, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .result-title {
+      font-size: clamp(2.1rem, 8vw, 2.8rem);
+      font-weight: 700;
+      line-height: 0.96;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .result-copy {
+      font-size: 0.98rem;
+    }
+
+    .discernment-box {
+      padding: 16px 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .discernment-label {
+      color: var(--accent-3);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .discernment-text {
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 0.96rem;
+      margin: 0;
+    }
+
+    .message-from-god {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(213, 179, 111, 0.16);
+      background:
+        linear-gradient(180deg, rgba(213, 179, 111, 0.09), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.025);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .message-from-god .discernment-label {
+      margin-bottom: 10px;
+    }
+
+    .message-from-god p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+
+    .foot-quote {
+      padding: 16px 18px;
+      border-left: 2px solid rgba(213, 179, 111, 0.5);
+      background: rgba(255, 255, 255, 0.025);
+      border-radius: 0 18px 18px 0;
+      color: rgba(245, 238, 226, 0.86);
+    }
+
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .signature {
+      margin-top: auto;
+      padding-top: 20px;
+      color: rgba(245, 238, 226, 0.44);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 481px) {
+      .app-shell {
+        padding-top: 26px;
+        padding-bottom: 26px;
+      }
+
+      .phone-frame {
+        min-height: min(920px, calc(100vh - 52px));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <div class="phone-frame">
+      <section class="screen start-screen active" id="start-screen" aria-labelledby="main-title">
+        <div class="ambient-glow"></div>
+        <div class="ambient-glow right"></div>
+
+        <div class="hero">
+          <div class="eyebrow">Reflexión personal</div>
+          <div class="cross-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </div>
+          <h1 id="main-title">Lo que realmente guía mi vida</h1>
+          <p>
+            No respondas lo que suena bien. Respondé lo que de verdad se parece a tus decisiones,
+            tus hábitos y tu forma de vivir cuando nadie te está mirando.
+          </p>
+
+          <div class="start-actions">
+            <div class="name-field">
+              <label class="name-label" for="name-input">Tu nombre</label>
+              <input
+                class="name-input"
+                id="name-input"
+                type="text"
+                inputmode="text"
+                autocomplete="given-name"
+                maxlength="28"
+                placeholder="Escribí tu nombre"
+                aria-describedby="name-note name-error"
+              >
+              <p class="name-note" id="name-note">
+                Lo vamos a usar para darte un mensaje final más personal.
+              </p>
+              <p class="field-error" id="name-error" aria-live="polite"></p>
+            </div>
+            <button class="primary-button" id="start-button" type="button">Empezar reflexión</button>
+            <p class="ghost-note">
+              Son 10 situaciones reales. No es un examen. Es una oportunidad para mirar con honestidad
+              qué está ocupando el centro.
+            </p>
+          </div>
+        </div>
+
+        <div class="signature">Grupo juvenil • discernimiento • vida real</div>
+      </section>
+
+      <section class="screen quiz-screen" id="quiz-screen" aria-live="polite">
+        <div class="ambient-glow"></div>
+
+        <div class="progress-shell">
+          <div class="progress-top">
+            <div class="question-step" id="question-step">Pregunta 1 de 10</div>
+            <div class="score-chip" id="score-chip">0 / 20</div>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <article class="question-card is-entering" id="question-card">
+          <div class="question-kicker">Mirate con verdad</div>
+          <h2 class="question-text" id="question-text"></h2>
+          <p class="question-helper">
+            Respondé según tu vida real, no según lo que quisieras que fuera verdad.
+          </p>
+
+          <div class="answer-group" id="answer-group">
+            <button class="answer-button" type="button" data-points="2" data-label="+2">
+              <strong>Sí lo hago</strong>
+              <span>Esto se parece bastante a cómo estoy viviendo hoy.</span>
+            </button>
+            <button class="answer-button" type="button" data-points="1" data-label="+1">
+              <strong>No estoy seguro</strong>
+              <span>Hay mezcla, dudas o incoherencias que no tengo del todo claras.</span>
+            </button>
+            <button class="answer-button" type="button" data-points="0" data-label="+0">
+              <strong>No lo hago</strong>
+              <span>No es lo que normalmente marca mis decisiones o mi manera de actuar.</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section class="screen result-screen" id="result-screen" aria-live="polite">
+        <div class="ambient-glow right"></div>
+
+        <article class="result-card">
+          <div class="result-top">
+            <div>
+          <div class="result-badge">Resultado final</div>
+              <h2 class="result-title" id="result-title"></h2>
+            </div>
+            <div class="score-ring" aria-label="Puntaje total">
+              <span id="result-score">0/20</span>
+            </div>
+          </div>
+
+          <p class="result-copy" id="result-message"></p>
+
+          <div class="discernment-box">
+            <div class="discernment-label">Lo que hoy parece pesar más</div>
+            <p class="discernment-text" id="result-discernment"></p>
+          </div>
+
+          <div class="message-from-god">
+            <div class="discernment-label">Si Dios te hablara hoy</div>
+            <p id="result-personal-message"></p>
+          </div>
+
+          <p class="foot-quote">
+            Tu vida siempre va a estar guiada por algo. La pregunta es si ese algo te acerca a Dios
+            o te aleja de quien estás llamado a ser.
+          </p>
+
+          <div class="result-actions">
+            <button class="primary-button" id="restart-button" type="button">Responder de nuevo</button>
+            <button class="secondary-button" id="change-name-button" type="button">Cambiar nombre</button>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      "Has dejado de hacer algo que querías por miedo a lo que iban a decir de vos.",
+      "Te importa más lo que piensan de vos que lo que Dios piensa.",
+      "Subís cosas o actuás de cierta forma para encajar o ser aceptado.",
+      "Decís que Dios es importante, pero casi nunca influye en tus decisiones.",
+      "Tomaste una decisión importante sin siquiera orarla.",
+      "Solo buscás a Dios cuando estás mal.",
+      "Hay partes de tu vida donde Dios no tiene entrada.",
+      "Actuás diferente en la iglesia y diferente fuera de ella.",
+      "Elegís lo fácil aunque sabés que no es lo correcto.",
+      "Decís que Dios guía tu vida, pero en la práctica no siempre es así."
+    ];
+
+    const themes = [
+      "aprobacion",
+      "aprobacion",
+      "aprobacion",
+      "autosuficiencia",
+      "autosuficiencia",
+      "fe_fragmentada",
+      "fe_fragmentada",
+      "fe_fragmentada",
+      "comodidad",
+      "autosuficiencia"
+    ];
+
+    const themeCopy = {
+      aprobacion: "La aprobación, el miedo al qué dirán o la necesidad de encajar podrían estar ocupando un lugar demasiado fuerte. Cuando eso pasa, la mirada de los demás termina pesando más que la voz de Dios.",
+      autosuficiencia: "Hoy parece pesar mucho el deseo de controlar por tu cuenta. Cuando Dios queda fuera de las decisiones reales, no desaparece la fe, pero sí se vuelve decorativa en vez de conducir la vida.",
+      fe_fragmentada: "Hay señales de una fe partida: Dios aparece en algunos momentos, pero no entra del todo en lo cotidiano. Y una fe que solo toca una parte de la vida nunca alcanza a transformarla completa.",
+      comodidad: "La comodidad puede estar guiando más de lo que pensás. A veces no elegimos el mal por rebeldía, sino por costumbre, cansancio o por no querer cargar con el costo de hacer lo correcto.",
+      mixed: "Hay varias cosas tirando al mismo tiempo de tu interior. Cuando no hay un centro claro, el corazón se dispersa, y lo disperso termina tomando decisiones sin dirección profunda."
+    };
+
+    const results = [
+      {
+        min: 0,
+        max: 4,
+        title: "Todavía hay centro",
+        message:
+          "Lo que respondiste sugiere que sí estás intentando vivir con cierta dirección y coherencia. Eso no significa perfección; significa que en medio de tus luchas todavía hay una búsqueda real por poner a Dios en el centro. Cuidalo. Lo que hoy está ordenado también necesita seguir entregándose."
+      },
+      {
+        min: 5,
+        max: 9,
+        title: "Hay ruido compitiendo",
+        message:
+          "Tu resultado muestra que hay cosas que sí están compitiendo por guiar tu vida. Tal vez no tomaron todo el lugar, pero ya afectan decisiones, hábitos y prioridades. Este es un buen momento para dejar de normalizar lo ambiguo y volver a mirar con honestidad qué voz estás dejando entrar."
+      },
+      {
+        min: 10,
+        max: 14,
+        title: "Algo más está decidiendo",
+        message:
+          "Lo que aparece en tus respuestas es fuerte: probablemente varias decisiones están siendo guiadas más por el miedo, la comodidad, la imagen o el impulso que por Dios. No se trata de sentir culpa por sentirte expuesto. Se trata de reconocer que si otra cosa está ocupando el centro, tarde o temprano también va a marcar tu destino."
+      },
+      {
+        min: 15,
+        max: 20,
+        title: "Dios no está ocupando el centro",
+        message:
+          "Tu resultado es confrontativo porque revela una distancia real entre lo que decís creer y lo que en la práctica está guiando tu vida. Tal vez nombrás a Dios, pero hoy otras fuerzas están tomando su lugar. La buena noticia es que la verdad no viene para aplastarte, sino para despertarte. Volver es posible, pero empieza cuando dejás de justificar lo que te está alejando."
+      }
+    ];
+
+    const personalOpenings = {
+      low: "veo que en vos todavía hay una búsqueda sincera. No todo está resuelto, pero hay espacio real para Mi voz.",
+      mid: "quiero mostrarte con claridad que hay ruidos alrededor de tu corazón que ya están compitiendo con Mi lugar.",
+      high: "necesito sacudir tu interior porque varias de tus decisiones ya no están naciendo desde la verdad, sino desde otras fuerzas que te empujan.",
+      veryHigh: "hoy no te hablo para condenarte, sino para despertarte. Hay cosas que están ocupando un lugar que no les corresponde dentro de vos."
+    };
+
+    const personalThemes = {
+      aprobacion: "No fuiste creado para vivir esclavo de la mirada de los demás. Cuando buscás encajar a cualquier precio, te alejás de la libertad con la que Yo te soñé.",
+      autosuficiencia: "No te pido que tengas todo controlado; te pido que Me dejes entrar. Cuando decidís sin orar, sin escuchar y sin confiar, te cargás solo con pesos que no tenés que llevar así.",
+      fe_fragmentada: "No quiero ser una parte decorativa de tu vida. Quiero entrar también en lo que escondés, en lo cotidiano, en lo que todavía no Me entregaste del todo.",
+      comodidad: "No te llamé solo a lo fácil. Muchas veces lo correcto incomoda, cuesta y te saca de tu zona segura, pero también ahí es donde más puede crecer tu corazón.",
+      mixed: "Veo que tu interior está siendo tirado por varias voces a la vez. Y cuando todo habla al mismo tiempo, se vuelve difícil escuchar lo que de verdad da vida."
+    };
+
+    const personalClosings = {
+      low: "Seguí cuidando ese deseo de vivir conmigo. No te confíes, pero tampoco te apagues: todavía puedo llevarte más hondo.",
+      mid: "No ignores estas señales. Si hoy volvés a ponerme en el centro, todavía podés ordenar mucho antes de que se enfríe más tu corazón.",
+      high: "No tengas miedo de reconocerlo. La verdad que te incomoda hoy puede convertirse en el comienzo de una vida más libre si me dejás entrar en serio.",
+      veryHigh: "Volvé. No cuando te sientas perfecto, no cuando todo esté acomodado: volvé ahora. Yo sigo llamándote por tu nombre incluso en medio de tu desorden."
+    };
+
+    const state = {
+      currentIndex: 0,
+      answers: [],
+      userName: ""
+    };
+
+    const startScreen = document.getElementById("start-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const nameInput = document.getElementById("name-input");
+    const nameError = document.getElementById("name-error");
+    const questionStep = document.getElementById("question-step");
+    const scoreChip = document.getElementById("score-chip");
+    const progressFill = document.getElementById("progress-fill");
+    const questionCard = document.getElementById("question-card");
+    const questionText = document.getElementById("question-text");
+    const answerButtons = Array.from(document.querySelectorAll(".answer-button"));
+    const resultTitle = document.getElementById("result-title");
+    const resultScore = document.getElementById("result-score");
+    const resultMessage = document.getElementById("result-message");
+    const resultDiscernment = document.getElementById("result-discernment");
+    const resultPersonalMessage = document.getElementById("result-personal-message");
+
+    function normalizeName(name) {
+      return name
+        .trim()
+        .replace(/\s+/g, " ")
+        .split(" ")
+        .map((fragment) => fragment.charAt(0).toUpperCase() + fragment.slice(1).toLowerCase())
+        .join(" ");
+    }
+
+    function getDisplayName() {
+      return state.userName || "hijo";
+    }
+
+    function switchScreen(targetScreen) {
+      [startScreen, quizScreen, resultScreen].forEach((screen) => {
+        screen.classList.toggle("active", screen === targetScreen);
+      });
+    }
+
+    function getScore() {
+      return state.answers.reduce((total, value) => total + value, 0);
+    }
+
+    function renderQuestion() {
+      const index = state.currentIndex;
+      const total = questions.length;
+      const progressValue = (index / total) * 100;
+
+      questionStep.textContent = `Pregunta ${index + 1} de ${total}`;
+      scoreChip.textContent = `${getScore()} / 20`;
+      progressFill.style.width = `${progressValue}%`;
+      questionText.textContent = questions[index];
+      questionCard.classList.remove("is-leaving");
+      questionCard.classList.remove("is-entering");
+
+      // Reinicia la animación de entrada para que cada tarjeta se sienta viva.
+      void questionCard.offsetWidth;
+      questionCard.classList.add("is-entering");
+    }
+
+    function getResultByScore(score) {
+      return results.find((result) => score >= result.min && score <= result.max);
+    }
+
+    function getIntensityKey(score) {
+      if (score <= 4) {
+        return "low";
+      }
+
+      if (score <= 9) {
+        return "mid";
+      }
+
+      if (score <= 14) {
+        return "high";
+      }
+
+      return "veryHigh";
+    }
+
+    function getDominantThemeData() {
+      const tallies = {
+        aprobacion: 0,
+        autosuficiencia: 0,
+        fe_fragmentada: 0,
+        comodidad: 0
+      };
+
+      state.answers.forEach((answer, index) => {
+        const theme = themes[index];
+        tallies[theme] += answer;
+      });
+
+      const sortedThemes = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+      const [topTheme, topValue] = sortedThemes[0];
+
+      if (topValue <= 1) {
+        return {
+          key: "mixed",
+          text: "Aunque hay áreas más fuertes que otras, tu principal desafío parece ser sostener la coherencia todos los días y no relajarte en lo que ya venías construyendo."
+        };
+      }
+
+      const hasTie = sortedThemes.length > 1 && sortedThemes[1][1] === topValue;
+
+      if (hasTie) {
+        return {
+          key: "mixed",
+          text: "No aparece una sola lucha dominante: hay varias voces compitiendo a la vez. Eso suele ser señal de una vida interior fragmentada, donde Dios no está fuera, pero tampoco está gobernando todo."
+        };
+      }
+
+      return {
+        key: topTheme,
+        text: themeCopy[topTheme]
+      };
+    }
+
+    function buildPersonalMessage(score, themeKey) {
+      const name = getDisplayName();
+      const intensity = getIntensityKey(score);
+
+      return `${name}, ${personalOpenings[intensity]} ${personalThemes[themeKey]} ${personalClosings[intensity]}`;
+    }
+
+    function validateName() {
+      const rawName = nameInput.value;
+      const normalizedName = normalizeName(rawName);
+
+      if (!normalizedName) {
+        nameError.textContent = "Escribí tu nombre antes de empezar.";
+        nameInput.focus();
+        return false;
+      }
+
+      state.userName = normalizedName;
+      nameInput.value = normalizedName;
+      nameError.textContent = "";
+      return true;
+    }
+
+    function showResult() {
+      const totalScore = getScore();
+      const result = getResultByScore(totalScore);
+      const dominantTheme = getDominantThemeData();
+
+      resultTitle.textContent = result.title;
+      resultScore.textContent = `${totalScore}/20`;
+      resultMessage.textContent = result.message;
+      resultDiscernment.textContent = dominantTheme.text;
+      resultPersonalMessage.textContent = buildPersonalMessage(totalScore, dominantTheme.key);
+      progressFill.style.width = "100%";
+      scoreChip.textContent = `${totalScore} / 20`;
+      switchScreen(resultScreen);
+    }
+
+    function handleAnswer(points) {
+      answerButtons.forEach((button) => {
+        button.disabled = true;
+      });
+
+      questionCard.classList.remove("is-entering");
+      questionCard.classList.add("is-leaving");
+      state.answers.push(points);
+
+      window.setTimeout(() => {
+        state.currentIndex += 1;
+
+        if (state.currentIndex >= questions.length) {
+          showResult();
+        } else {
+          renderQuestion();
+        }
+
+        answerButtons.forEach((button) => {
+          button.disabled = false;
+        });
+      }, 230);
+    }
+
+    function beginQuiz() {
+      state.currentIndex = 0;
+      state.answers = [];
+      switchScreen(quizScreen);
+      renderQuestion();
+    }
+
+    function startQuiz() {
+      if (!validateName()) {
+        return;
+      }
+
+      beginQuiz();
+    }
+
+    function changeName() {
+      switchScreen(startScreen);
+      window.setTimeout(() => {
+        nameInput.focus();
+        nameInput.select();
+      }, 50);
+    }
+
+    document.getElementById("start-button").addEventListener("click", startQuiz);
+    document.getElementById("restart-button").addEventListener("click", beginQuiz);
+    document.getElementById("change-name-button").addEventListener("click", changeName);
+
+    nameInput.addEventListener("input", () => {
+      if (nameError.textContent) {
+        nameError.textContent = "";
+      }
+    });
+
+    nameInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        startQuiz();
+      }
+    });
+
+    answerButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        handleAnswer(Number(button.dataset.points));
+      });
+    });
+  </script>
+</body>
+</html>
