@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1720">
+  <title>Presentacion Web de Imagenes</title>
+  <meta
+    name="description"
+    content="Presentacion web responsive para mostrar imagenes numeradas y descargarlas como PDF o ZIP."
+  >
+  <link rel="stylesheet" href="styles.css?v=20260509-4">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-glow page-glow-left" aria-hidden="true"></div>
+    <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Presentacion responsive</p>
+        <h1>Convierte una carpeta de imagenes en una presentacion web</h1>
+        <p class="hero-text">
+          Guarda tus diapositivas en <code>imagenes/</code> con nombres como
+          <code>1.png</code>, <code>2.png</code>, <code>3.png</code> y la pagina las cargara automaticamente.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="button button-primary" id="fullscreenBtn" type="button">Pantalla completa</button>
+        <button class="button" id="downloadPdfBtn" type="button" disabled>Descargar PDF</button>
+        <button class="button" id="downloadZipBtn" type="button" disabled>Descargar ZIP</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="presentation-shell" id="presentationShell" aria-label="Presentacion de imagenes">
+        <div class="viewer-topbar">
+          <div class="viewer-state">
+            <span class="badge" id="statusBadge">Buscando imagenes...</span>
+            <strong id="slideCounter">0 / 0</strong>
+          </div>
+
+          <div class="viewer-controls">
+            <button class="icon-button" id="prevBtn" type="button" disabled aria-label="Diapositiva anterior">
+              <span aria-hidden="true">&lt;</span>
+            </button>
+            <button class="icon-button" id="nextBtn" type="button" disabled aria-label="Diapositiva siguiente">
+              <span aria-hidden="true">&gt;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="stage-frame" id="stageFrame">
+          <button class="stage-hitbox stage-hitbox-left" id="prevStageBtn" type="button" aria-label="Anterior"></button>
+
+          <figure class="slide-stage" id="slideStage">
+            <div class="loading-layer" id="loadingLayer">
+              <div class="spinner" aria-hidden="true"></div>
+              <p>Cargando presentacion...</p>
+            </div>
+
+            <div class="empty-layer" id="emptyLayer" hidden>
+              <h2>No hay imagenes detectadas</h2>
+              <p>
+                Agrega archivos consecutivos en <code>imagenes/</code> usando nombres como
+                <code>1.png</code>, <code>2.png</code> y presiona <strong>Recargar</strong>.
+              </p>
+            </div>
+
+            <img id="slideImage" alt="" hidden>
+
+            <figcaption class="slide-caption">
+              <span id="slideFilename">Esperando imagenes...</span>
+              <span id="slideHint">Usa flechas, swipe o miniaturas para navegar</span>
+            </figcaption>
+          </figure>
+
+          <button class="stage-hitbox stage-hitbox-right" id="nextStageBtn" type="button" aria-label="Siguiente"></button>
+        </div>
+
+        <div class="progress-bar" aria-hidden="true">
+          <span id="progressFill"></span>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="panel panel-actions">
+          <button class="button button-ghost" id="reloadBtn" type="button">Recargar</button>
+        </section>
+
+        <section class="panel">
+          <h2>Miniaturas</h2>
+          <div class="thumb-strip" id="thumbStrip" aria-label="Miniaturas de la presentacion"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Estado</h2>
+          <p class="feedback" id="feedbackLine" aria-live="polite">
+            Preparando la presentacion...
+          </p>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js?v=20260509-4" defer></script>
+</body>
+</html>

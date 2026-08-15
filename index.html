@@ -3,107 +3,1050 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0f1720">
-  <title>Presentacion Web de Imagenes</title>
-  <meta
-    name="description"
-    content="Presentacion web responsive para mostrar imagenes numeradas y descargarlas como PDF o ZIP."
-  >
-  <link rel="stylesheet" href="styles.css?v=20260509-4">
+  <meta name="theme-color" content="#d94f2b">
+  <title>Charadas en 15</title>
+  <style>
+    :root {
+      --bg: #fff4e8;
+      --bg-strong: #ffd4bf;
+      --ink: #2f1b12;
+      --ink-soft: #765547;
+      --card: rgba(255, 252, 247, 0.9);
+      --card-strong: rgba(255, 248, 241, 0.98);
+      --line: rgba(101, 57, 38, 0.14);
+      --accent: #d94f2b;
+      --accent-strong: #ff8f45;
+      --accent-deep: #8f2d17;
+      --success: #18845d;
+      --success-strong: #28b37b;
+      --skip: #fff2d5;
+      --skip-strong: #f3be5d;
+      --shadow: 0 26px 60px rgba(119, 58, 33, 0.18);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --transition: 220ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 157, 84, 0.38), transparent 28%),
+        radial-gradient(circle at 84% 12%, rgba(217, 79, 43, 0.28), transparent 16%),
+        radial-gradient(circle at 50% 100%, rgba(255, 212, 191, 0.9), transparent 30%),
+        linear-gradient(180deg, #ffe8d7 0%, #fff6ef 55%, #fff0e2 100%);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(rgba(143, 45, 23, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(143, 45, 23, 0.04) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 88%);
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.42), transparent 18%),
+        radial-gradient(circle at 78% 14%, rgba(255, 255, 255, 0.28), transparent 16%);
+      opacity: 0.85;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .page {
+      position: relative;
+      width: min(1100px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: max(18px, env(safe-area-inset-top)) 0 max(22px, env(safe-area-inset-bottom));
+      z-index: 1;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr);
+      gap: 20px;
+      align-items: stretch;
+      padding: 26px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(143, 45, 23, 0.1);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.38), transparent 50%),
+        linear-gradient(180deg, rgba(255, 247, 239, 0.92), rgba(255, 241, 230, 0.82)),
+        var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-copy {
+      position: relative;
+      padding-right: 8px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(143, 45, 23, 0.12);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--accent-deep);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 0 12px rgba(255, 143, 69, 0.7);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Georgia", "Times New Roman", serif;
+      letter-spacing: -0.04em;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 0.9;
+      max-width: 9ch;
+    }
+
+    .hero-copy p {
+      max-width: 60ch;
+      margin: 16px 0 0;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+      padding: 16px;
+      border-radius: calc(var(--radius-xl) - 4px);
+      background:
+        radial-gradient(circle at top, rgba(255, 143, 69, 0.18), transparent 42%),
+        linear-gradient(180deg, #fff7f0, #ffefe4);
+      border: 1px solid rgba(143, 45, 23, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-side::before {
+      content: "";
+      position: absolute;
+      right: -34px;
+      top: 18px;
+      width: 150px;
+      height: 150px;
+      transform: rotate(12deg);
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.25), transparent 38%),
+        linear-gradient(145deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 22px 36px rgba(217, 79, 43, 0.22);
+    }
+
+    .hero-side::after {
+      content: "15";
+      position: absolute;
+      right: 24px;
+      top: 34px;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 4.8rem;
+      line-height: 1;
+      font-weight: 700;
+      color: rgba(255, 250, 246, 0.88);
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--accent-deep);
+      font-weight: 800;
+      border: 1px solid rgba(143, 45, 23, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-side p {
+      margin: 0;
+      padding-top: 90px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(290px, 0.85fr);
+      gap: 20px;
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(143, 45, 23, 0.1);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 249, 244, 0.86)),
+        var(--card-strong);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-inner {
+      padding: 22px;
+    }
+
+    .setup-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .panel-title h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 0.95;
+    }
+
+    .muted {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+
+    .field-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--line);
+    }
+
+    .field-card label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .counter-pill {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 143, 69, 0.16);
+      color: var(--accent-deep);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 280px;
+      resize: vertical;
+      border: 1px solid rgba(143, 45, 23, 0.18);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255, 252, 248, 0.95);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      outline: 2px solid rgba(217, 79, 43, 0.22);
+      border-color: rgba(217, 79, 43, 0.36);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        opacity var(--transition),
+        background var(--transition);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .button:hover:not(:disabled),
+    .button:focus-visible:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 28px rgba(143, 45, 23, 0.16);
+    }
+
+    .button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #fff9f4;
+    }
+
+    .button-soft {
+      background: #fff5ed;
+      color: var(--accent-deep);
+      border: 1px solid rgba(143, 45, 23, 0.14);
+    }
+
+    .button-success {
+      background: linear-gradient(135deg, var(--success), var(--success-strong));
+      color: #f4fff9;
+      min-width: 220px;
+    }
+
+    .button-skip {
+      background: linear-gradient(135deg, #ffe4a6, var(--skip-strong));
+      color: #5e380d;
+      min-width: 220px;
+    }
+
+    .status-box {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.64);
+      border: 1px solid var(--line);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .stat-value {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .timer-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at top, rgba(255, 143, 69, 0.24), transparent 48%),
+        linear-gradient(180deg, #fff1e6, #ffe5d3);
+      border: 1px solid rgba(217, 79, 43, 0.12);
+    }
+
+    .timer-card .stat-value {
+      color: var(--accent-deep);
+    }
+
+    .live-pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(24, 132, 93, 0.12);
+      color: var(--success);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .live-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 10px rgba(24, 132, 93, 0.55);
+    }
+
+    .word-stage {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .word-card {
+      min-height: 340px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      border-radius: calc(var(--radius-xl) - 4px);
+      border: 1px solid rgba(143, 45, 23, 0.12);
+      background:
+        radial-gradient(circle at top, rgba(255, 143, 69, 0.18), transparent 40%),
+        linear-gradient(180deg, #fff8f2, #fff2e8);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .word-card::before,
+    .word-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 30px;
+      transform: rotate(16deg);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 143, 69, 0.12));
+      opacity: 0.58;
+    }
+
+    .word-card::before {
+      left: -30px;
+      top: -26px;
+    }
+
+    .word-card::after {
+      right: -34px;
+      bottom: -38px;
+    }
+
+    .word-value {
+      position: relative;
+      z-index: 1;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 0.96;
+      max-width: 11ch;
+      text-wrap: balance;
+      word-break: break-word;
+    }
+
+    .word-caption {
+      margin: 0;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    .result-box {
+      display: grid;
+      gap: 16px;
+      text-align: center;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at top, rgba(24, 132, 93, 0.16), transparent 44%),
+        linear-gradient(180deg, #fff8f4, #fff2e9);
+      border: 1px solid var(--line);
+    }
+
+    .result-big {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: clamp(4rem, 12vw, 6.5rem);
+      line-height: 0.9;
+      color: var(--accent-deep);
+    }
+
+    .footnote {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        min-height: 220px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100%, calc(100% - 18px));
+        padding-top: 10px;
+      }
+
+      .hero,
+      .panel-inner {
+        padding: 18px;
+      }
+
+      h1 {
+        max-width: none;
+        font-size: clamp(2.25rem, 11vw, 3.5rem);
+      }
+
+      textarea {
+        min-height: 220px;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-success,
+      .button-skip {
+        width: 100%;
+      }
+
+      .word-card {
+        min-height: 260px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="page-shell">
-    <div class="page-glow page-glow-left" aria-hidden="true"></div>
-    <div class="page-glow page-glow-right" aria-hidden="true"></div>
-
-    <header class="hero">
+  <main class="page">
+    <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Presentacion responsive</p>
-        <h1>Convierte una carpeta de imagenes en una presentacion web</h1>
-        <p class="hero-text">
-          Guarda tus diapositivas en <code>imagenes/</code> con nombres como
-          <code>1.png</code>, <code>2.png</code>, <code>3.png</code> y la pagina las cargara automaticamente.
+        <p class="eyebrow">Juego rapido de charadas</p>
+        <h1>Charadas en 15 minutos</h1>
+        <p>
+          Pega tu lista de acciones o personajes, uno por linea. Al comenzar se mostrara solo una
+          palabra a la vez, tendras <strong>15 minutos</strong> para jugar, y al final veras
+          cuantas adivinaron.
         </p>
       </div>
 
-      <div class="hero-actions">
-        <button class="button button-primary" id="fullscreenBtn" type="button">Pantalla completa</button>
-        <button class="button" id="downloadPdfBtn" type="button" disabled>Descargar PDF</button>
-        <button class="button" id="downloadZipBtn" type="button" disabled>Descargar ZIP</button>
+      <div class="hero-side">
+        <span class="hero-badge">Solo una palabra visible</span>
+        <p>
+          Usa <strong>Completado</strong> para sumar un acierto y pasar a la siguiente.
+          Usa <strong>Siguiente</strong> cuando quieran saltar una palabra.
+        </p>
       </div>
-    </header>
+    </section>
 
-    <main class="workspace">
-      <section class="presentation-shell" id="presentationShell" aria-label="Presentacion de imagenes">
-        <div class="viewer-topbar">
-          <div class="viewer-state">
-            <span class="badge" id="statusBadge">Buscando imagenes...</span>
-            <strong id="slideCounter">0 / 0</strong>
-          </div>
-
-          <div class="viewer-controls">
-            <button class="icon-button" id="prevBtn" type="button" disabled aria-label="Diapositiva anterior">
-              <span aria-hidden="true">&lt;</span>
-            </button>
-            <button class="icon-button" id="nextBtn" type="button" disabled aria-label="Diapositiva siguiente">
-              <span aria-hidden="true">&gt;</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="stage-frame" id="stageFrame">
-          <button class="stage-hitbox stage-hitbox-left" id="prevStageBtn" type="button" aria-label="Anterior"></button>
-
-          <figure class="slide-stage" id="slideStage">
-            <div class="loading-layer" id="loadingLayer">
-              <div class="spinner" aria-hidden="true"></div>
-              <p>Cargando presentacion...</p>
+    <section class="layout">
+      <div class="panel">
+        <div class="panel-inner">
+          <section id="setupScreen" class="setup-grid">
+            <div class="panel-title">
+              <h2>Configura la ronda</h2>
             </div>
 
-            <div class="empty-layer" id="emptyLayer" hidden>
-              <h2>No hay imagenes detectadas</h2>
-              <p>
-                Agrega archivos consecutivos en <code>imagenes/</code> usando nombres como
-                <code>1.png</code>, <code>2.png</code> y presiona <strong>Recargar</strong>.
-              </p>
+            <p class="muted">
+              Puedes dejar la lista de ejemplo o reemplazarla por tu propio listado. Cada linea sera una
+              charada distinta y al comenzar cada ronda se mezclaran de forma aleatoria.
+            </p>
+
+            <div class="field-card">
+              <label for="listInput">
+                <span>Lista de acciones o personajes</span>
+                <span class="counter-pill" id="listCount">0 charadas</span>
+              </label>
+              <textarea id="listInput" spellcheck="false" aria-label="Lista de charadas"></textarea>
             </div>
 
-            <img id="slideImage" alt="" hidden>
+            <div class="button-row">
+              <button class="button button-primary" id="startBtn" type="button">Comenzar juego</button>
+              <button class="button button-soft" id="resetListBtn" type="button">Restaurar ejemplo</button>
+            </div>
+          </section>
 
-            <figcaption class="slide-caption">
-              <span id="slideFilename">Esperando imagenes...</span>
-              <span id="slideHint">Usa flechas, swipe o miniaturas para navegar</span>
-            </figcaption>
-          </figure>
+          <section id="gameScreen" class="word-stage" hidden>
+            <div class="panel-title">
+              <h2>Ronda en vivo</h2>
+              <span class="live-pill">Jugando</span>
+            </div>
 
-          <button class="stage-hitbox stage-hitbox-right" id="nextStageBtn" type="button" aria-label="Siguiente"></button>
+            <div class="word-card" aria-live="polite" aria-atomic="true">
+              <div class="word-value" id="currentWord">Listo para empezar</div>
+            </div>
+
+            <p class="word-caption" id="turnCaption">
+              La palabra actual se mantiene sola en pantalla hasta que pulses uno de los botones.
+            </p>
+
+            <div class="button-row">
+              <button class="button button-success" id="completeBtn" type="button">Completado</button>
+              <button class="button button-skip" id="nextBtn" type="button">Siguiente</button>
+            </div>
+          </section>
+
+          <section id="resultScreen" hidden>
+            <div class="panel-title">
+              <h2>Resultado final</h2>
+            </div>
+
+            <div class="result-box">
+              <p class="muted" id="resultMessage">Tiempo terminado</p>
+              <div class="result-big" id="finalScore">0</div>
+              <p class="muted">charadas adivinadas</p>
+              <p class="footnote" id="resultDetails">Puedes volver a jugar con la misma lista o editarla.</p>
+
+              <div class="button-row">
+                <button class="button button-primary" id="playAgainBtn" type="button">Jugar otra vez</button>
+                <button class="button button-soft" id="editListBtn" type="button">Editar lista</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <aside class="status-box">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="timer-card">
+              <span class="stat-label">Tiempo restante</span>
+              <div class="stat-value" id="timerValue">15:00</div>
+            </div>
+          </div>
         </div>
 
-        <div class="progress-bar" aria-hidden="true">
-          <span id="progressFill"></span>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="status-grid">
+              <div class="stat-card">
+                <span class="stat-label">Adivinadas</span>
+                <div class="stat-value" id="scoreValue">0</div>
+              </div>
+
+              <div class="stat-card">
+                <span class="stat-label">Restantes</span>
+                <div class="stat-value" id="remainingValue">0</div>
+              </div>
+
+              <div class="stat-card">
+                <span class="stat-label">Mostrando</span>
+                <div class="stat-value" id="progressValue">0 / 0</div>
+              </div>
+
+              <div class="stat-card">
+                <span class="stat-label">Saltadas</span>
+                <div class="stat-value" id="skippedValue">0</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
 
-      <aside class="sidebar">
-        <section class="panel panel-actions">
-          <button class="button button-ghost" id="reloadBtn" type="button">Recargar</button>
-        </section>
-
-        <section class="panel">
-          <h2>Miniaturas</h2>
-          <div class="thumb-strip" id="thumbStrip" aria-label="Miniaturas de la presentacion"></div>
-        </section>
-
-        <section class="panel">
-          <h2>Estado</h2>
-          <p class="feedback" id="feedbackLine" aria-live="polite">
-            Preparando la presentacion...
-          </p>
-        </section>
+        <div class="panel">
+          <div class="panel-inner">
+            <p class="muted" id="statusMessage">
+              Agrega tu lista y presiona <strong>Comenzar juego</strong> para iniciar la ronda.
+            </p>
+          </div>
+        </div>
       </aside>
-    </main>
-  </div>
+    </section>
+  </main>
 
-  <script src="app.js?v=20260509-4" defer></script>
+  <script>
+    const urlConfig = new URLSearchParams(window.location.search);
+    const debugSeconds = Number.parseInt(urlConfig.get("debugSeconds") || "", 10);
+    const GAME_DURATION_SECONDS =
+      Number.isFinite(debugSeconds) && debugSeconds > 0 ? debugSeconds : 15 * 60;
+    const STORAGE_KEY = "charadas-lista-v2";
+    const DEFAULT_CHARADES = [
+      "Cepillarse los dientes",
+      "Montar bicicleta",
+      "Nadar",
+      "Pescar",
+      "Hacer malabares",
+      "Saltar la cuerda",
+      "Tocar guitarra",
+      "Tomarse una selfie",
+      "Volar una cometa",
+      "Caminar de puntillas",
+      "Escalar una montaña",
+      "Cantar karaoke",
+      "Lavar un carro",
+      "Hacer karate",
+      "Montar a caballo",
+      "Spider-Man",
+      "Harry Potter",
+      "Super Mario",
+      "Iron Man",
+      "Mickey Mouse",
+      "Bombero",
+      "Chef",
+      "Policía",
+      "Mago",
+      "Astronauta",
+      "Pingüino",
+      "T-Rex",
+      "Mono",
+      "Canguro",
+      "Elefante",
+       "Batman",
+  "Cocinar espagueti",
+  "Shakira",
+  "Montar a caballo",
+  "Spider-Man",
+  "Hacer yoga",
+  "Michael Jackson",
+  "Jugar futbol",
+  "Rapunzel",
+  "Barrer la casa",
+  "Superman",
+  "Tocar guitarra",
+  "Harry Potter",
+  "Cepillarse los dientes",
+  "Mario Bros",
+  "Pescar",
+  "El Chavo del 8",
+  "Hacer malabares",
+  "Hulk",
+  "Saltar la cuerda",
+  "Karol G",
+  "Tomarse una selfie",
+  "Mickey Mouse",
+  "Lavar un carro",
+  "Cristiano Ronaldo",
+  "Nadar",
+  "Cenicienta",
+  "Tocar la batería",
+  "Mr. Bean",
+  "Escalar una montaña",
+  "Iron Man",
+  "Cantar karaoke",
+  "Jack Sparrow",
+  "Jugar boliche",
+  "Bob Esponja",
+  "Hacer karate",
+  "Bad Bunny",
+  "Patinar",
+  "Darth Vader",
+  "Volar una cometa"
+    ];
+  
+
+    const state = {
+      items: [],
+      currentIndex: 0,
+      score: 0,
+      skipped: 0,
+      timeLeft: GAME_DURATION_SECONDS,
+      timerId: null,
+      started: false,
+      finished: false
+    };
+
+    const elements = {
+      listInput: document.getElementById("listInput"),
+      listCount: document.getElementById("listCount"),
+      startBtn: document.getElementById("startBtn"),
+      resetListBtn: document.getElementById("resetListBtn"),
+      completeBtn: document.getElementById("completeBtn"),
+      nextBtn: document.getElementById("nextBtn"),
+      playAgainBtn: document.getElementById("playAgainBtn"),
+      editListBtn: document.getElementById("editListBtn"),
+      setupScreen: document.getElementById("setupScreen"),
+      gameScreen: document.getElementById("gameScreen"),
+      resultScreen: document.getElementById("resultScreen"),
+      currentWord: document.getElementById("currentWord"),
+      turnCaption: document.getElementById("turnCaption"),
+      timerValue: document.getElementById("timerValue"),
+      scoreValue: document.getElementById("scoreValue"),
+      remainingValue: document.getElementById("remainingValue"),
+      progressValue: document.getElementById("progressValue"),
+      skippedValue: document.getElementById("skippedValue"),
+      statusMessage: document.getElementById("statusMessage"),
+      resultMessage: document.getElementById("resultMessage"),
+      finalScore: document.getElementById("finalScore"),
+      resultDetails: document.getElementById("resultDetails")
+    };
+
+    hydrateList();
+    bindEvents();
+    refreshListCount();
+    renderIdleStats();
+
+    function bindEvents() {
+      elements.listInput.addEventListener("input", () => {
+        saveList();
+        refreshListCount();
+      });
+
+      elements.startBtn.addEventListener("click", startGame);
+      elements.resetListBtn.addEventListener("click", resetExampleList);
+      elements.completeBtn.addEventListener("click", markCompleted);
+      elements.nextBtn.addEventListener("click", skipWord);
+      elements.playAgainBtn.addEventListener("click", replayWithSameList);
+      elements.editListBtn.addEventListener("click", returnToSetup);
+    }
+
+    function hydrateList() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      elements.listInput.value = saved ? saved : DEFAULT_CHARADES.join("\n");
+    }
+
+    function saveList() {
+      localStorage.setItem(STORAGE_KEY, elements.listInput.value);
+    }
+
+    function resetExampleList() {
+      elements.listInput.value = DEFAULT_CHARADES.join("\n");
+      saveList();
+      refreshListCount();
+      setStatus("Se restauro la lista de ejemplo. Puedes editarla antes de jugar.");
+    }
+
+    function refreshListCount() {
+      const items = parseItems(elements.listInput.value);
+      elements.listCount.textContent = `${items.length} charadas`;
+      elements.startBtn.disabled = items.length === 0;
+    }
+
+    function parseItems(rawText) {
+      return rawText
+        .split(/\r?\n/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function shuffleItems(items) {
+      const shuffled = [...items];
+
+      for (let index = shuffled.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+      }
+
+      return shuffled;
+    }
+
+    function startGame() {
+      const items = parseItems(elements.listInput.value);
+
+      if (!items.length) {
+        setStatus("Agrega al menos una charada antes de comenzar.");
+        return;
+      }
+
+      clearTimer();
+      state.items = shuffleItems(items);
+      state.currentIndex = 0;
+      state.score = 0;
+      state.skipped = 0;
+      state.timeLeft = GAME_DURATION_SECONDS;
+      state.started = true;
+      state.finished = false;
+
+      elements.setupScreen.hidden = true;
+      elements.resultScreen.hidden = true;
+      elements.gameScreen.hidden = false;
+
+      updateWord();
+      updateStats();
+      renderTimer();
+      setStatus("La ronda ya empezo y las charadas se mezclaron al azar. Pulsa Completado o Siguiente en cada turno.");
+
+      state.timerId = window.setInterval(() => {
+        state.timeLeft -= 1;
+        renderTimer();
+
+        if (state.timeLeft <= 0) {
+          finishGame("time");
+        }
+      }, 1000);
+    }
+
+    function markCompleted() {
+      if (!state.started || state.finished) {
+        return;
+      }
+
+      state.score += 1;
+      advanceWord("completed");
+    }
+
+    function skipWord() {
+      if (!state.started || state.finished) {
+        return;
+      }
+
+      state.skipped += 1;
+      advanceWord("skipped");
+    }
+
+    function advanceWord(mode) {
+      const isLastItem = state.currentIndex >= state.items.length - 1;
+
+      if (isLastItem) {
+        finishGame("list");
+        return;
+      }
+
+      state.currentIndex += 1;
+      updateWord();
+      updateStats();
+
+      if (mode === "completed") {
+        setStatus("Sumaste un punto y ya pasaste a la siguiente charada.");
+      } else {
+        setStatus("Saltaste la charada actual y ya pasaste a la siguiente.");
+      }
+    }
+
+    function updateWord() {
+      elements.currentWord.textContent = state.items[state.currentIndex];
+      elements.turnCaption.textContent =
+        `Charada ${state.currentIndex + 1} de ${state.items.length}. Solo esta palabra se muestra en pantalla.`;
+    }
+
+    function updateStats() {
+      const viewed = state.started ? state.currentIndex + 1 : 0;
+      const remaining = state.started ? Math.max(state.items.length - viewed, 0) : 0;
+
+      elements.scoreValue.textContent = String(state.score);
+      elements.skippedValue.textContent = String(state.skipped);
+      elements.progressValue.textContent = `${viewed} / ${state.items.length}`;
+      elements.remainingValue.textContent = String(remaining);
+    }
+
+    function renderTimer() {
+      elements.timerValue.textContent = formatClock(state.timeLeft);
+    }
+
+    function finishGame(reason) {
+      if (state.finished) {
+        return;
+      }
+
+      state.finished = true;
+      state.started = false;
+      clearTimer();
+
+       if (reason === "time") {
+        state.timeLeft = 0;
+      }
+
+      elements.gameScreen.hidden = true;
+      elements.resultScreen.hidden = false;
+
+      elements.finalScore.textContent = String(state.score);
+
+      if (reason === "time") {
+        elements.resultMessage.textContent = "Se acabo el tiempo";
+        elements.resultDetails.textContent =
+          `Adivinaron ${state.score} y saltaron ${state.skipped} de un total de ${state.items.length}.`;
+        setStatus("Tiempo terminado. Ya puedes revisar el resultado final.");
+      } else {
+        elements.resultMessage.textContent = "Se terminaron las charadas";
+        elements.resultDetails.textContent =
+          `Usaron toda la lista antes de que acabaran los 15 minutos. Adivinaron ${state.score}.`;
+        setStatus("La lista termino antes del tiempo. Ya puedes jugar otra ronda.");
+      }
+
+      renderTimer();
+      updateStats();
+    }
+
+    function replayWithSameList() {
+      startGame();
+    }
+
+    function returnToSetup() {
+      clearTimer();
+      state.started = false;
+      state.finished = false;
+      elements.resultScreen.hidden = true;
+      elements.gameScreen.hidden = true;
+      elements.setupScreen.hidden = false;
+      refreshListCount();
+      renderIdleStats();
+      setStatus("Edita la lista si quieres cambiar palabras y vuelve a comenzar.");
+    }
+
+    function renderIdleStats() {
+      elements.scoreValue.textContent = "0";
+      elements.skippedValue.textContent = "0";
+      elements.remainingValue.textContent = "0";
+      elements.progressValue.textContent = "0 / 0";
+      elements.timerValue.textContent = formatClock(GAME_DURATION_SECONDS);
+    }
+
+    function clearTimer() {
+      if (state.timerId) {
+        window.clearInterval(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    function setStatus(message) {
+      elements.statusMessage.innerHTML = message;
+    }
+
+    function formatClock(totalSeconds) {
+      const safeSeconds = Math.max(totalSeconds, 0);
+      const minutes = String(Math.floor(safeSeconds / 60)).padStart(2, "0");
+      const seconds = String(safeSeconds % 60).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+  </script>
 </body>
 </html>
